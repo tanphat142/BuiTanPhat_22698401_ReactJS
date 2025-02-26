@@ -1,0 +1,64 @@
+/* Tổng container */
+.container {
+    max-width: 500px;
+    margin: 20px auto;
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  
+  /* Nhóm input */
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  /* Input & Button */
+  input, button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Button style */
+  button {
+    background-color: #ff4081;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: 0.3s;
+  }
+  
+  button:hover {
+    background-color: #e91e63;
+  }
+  
+  /* Bảng kết quả */
+  .result {
+    margin-top: 20px;
+    text-align: left;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  th {
+    background-color: #ff4081;
+    color: white;
+  }
+  

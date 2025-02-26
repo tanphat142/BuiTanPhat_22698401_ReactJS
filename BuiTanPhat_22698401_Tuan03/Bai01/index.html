@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <title>Hello, world!</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="inner-main">
+            <div class="inner-logo">
+              <a href="/">
+                <img src="assets/images/logo.png" alt="logo">
+              </a>
+              <div class="input-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="abcabcabc">
+              </div>
+            </div>
+            <div class="inner-menu">
+              <ul>
+                <li>
+                  <a href="#">
+                    What to cook
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    Recipes
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    Ingredients
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    Occasions
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    About Us
+                  </a>
+              </ul>
+            </div>
+            <div class="inner-user">
+              <div class="recipe-box">
+                <i class="fa-solid fa-image"></i>
+                <span>Your Recipe Box</span>
+              </div>
+              <div class="image-user">
+                <img src="./assets/images/info-user.png" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- End header -->
+
+  <!-- Main -->
+  <div class="container">
+    <main class="main">
+      <aside class="filters">
+        <div class="filter-header">
+          <span>☰ FILTERS</span>
+          <span class="toggle">⌃</span>
+        </div>
+
+        <div class="filter-section">
+          <p>Type</p>
+          <div class="filter-options">
+            <label><input type="checkbox"> Pan-fried</label>
+            <label><input type="checkbox"> Stir-fried</label>
+            <label><input type="checkbox" checked> Grilled</label>
+            <label><input type="checkbox" checked> Roasted</label>
+            <label><input type="checkbox"> Sauteed</label>
+            <label><input type="checkbox"> Baked</label>
+            <label><input type="checkbox"> Steamed</label>
+            <label><input type="checkbox"> Stewed</label>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <p>Time</p>
+          <input type="range" min="10" max="60" value="30">
+          <input type="range" min="10" max="60" value="50">
+          <div class="time-values">
+            <span>30 minutes</span>
+            <span>50 minutes</span>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <p>Rating</p>
+          <div class="rating">
+            <label><input type="checkbox"> ⭐⭐⭐⭐⭐</label>
+            <label><input type="checkbox"> ⭐⭐⭐⭐☆</label>
+            <label><input type="checkbox" checked> ⭐⭐⭐☆☆</label>
+            <label><input type="checkbox" checked> ⭐⭐☆☆☆</label>
+            <label><input type="checkbox" checked> ⭐☆☆☆☆</label>
+          </div>
+        </div>
+
+        <button class="apply-btn">Apply</button>
+      </aside>
+
+      <section class="no-results">
+        <h2>Sorry, no results were found for "cakescascsa"</h2>
+        <img src="../Bai01/img/kq.PNG" alt="No results">
+        <p>We have all your Independence Day sweets covered.</p>
+        <div class="suggestions">
+          <span>Sweet Cake</span>
+          <span>Black Cake</span>
+          <span>Pozole Verde</span>
+          <span>Healthy Food</span>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!--End Main -->
+
+  <!-- Footer -->
+  <div class="container">
+    <footer>
+      <div class="footer-section">
+        <h3>About Us</h3>
+        <p>Welcome to our website, a wonderful place to explore and learn how to cook like a pro.</p>
+        <div class="footer-subscribe">
+          <input type="email" placeholder="Enter your email">
+          <button>Send</button>
+        </div>
+
+      </div>
+      <div class="footer-section">
+        <h3>Learn More</h3>
+        <ul>
+          <li>Our Cooks</li>
+          <li>See Our Features</li>
+          <li>FAQ</li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Shop</h3>
+        <ul>
+          <li>Gift Subscription</li>
+          <li>Send Us Feedback</li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Recipes</h3>
+        <ul>
+          <li>What to Cook This Week</li>
+          <li>Pasta</li>
+          <li>Dinner</li>
+          <li>Healthy</li>
+          <li>Vegetarian</li>
+          <li>Vegan</li>
+          <li>Christmas</li>
+        </ul>
+      </div>
+      <div class="footer-bottom">
+        <img src="logo.png" alt="Cheffy">
+        <p>2023 Cheffy Company</p>
+        <p>Terms of Service | Privacy Policy</p>
+      </div>
+
+    </footer>
+  </div>
+  <!--End Footer -->
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
