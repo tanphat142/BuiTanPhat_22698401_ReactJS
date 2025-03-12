@@ -1,0 +1,35 @@
+.your-recipe {
+    margin: 50px 100px;
+}
+
+.your-recipe .container-recipe {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.your-recipe .container-recipe .box-recipe {
+    width: 300px;
+    cursor: pointer;
+}
+
+.your-recipe .container-recipe .box-recipe .title {
+    padding: 5px 15px;
+}
+
+.your-recipe .container-recipe .box-recipe img { 
+    border-radius: 10px;
+    width: 100%;
+    height: 50%;
+}
+
+.your-recipe .container-recipe .box-recipe h4 {
+    font-size: 16px;
+}
+
+
+.your-recipe .container-recipe .box-recipe p {
+    color: rgb(230, 64, 119);
+}

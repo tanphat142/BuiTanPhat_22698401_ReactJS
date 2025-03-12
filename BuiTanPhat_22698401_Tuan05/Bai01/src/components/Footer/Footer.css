@@ -1,0 +1,66 @@
+.footer {
+    display: flex;
+    gap: 100px;
+    background-color: #1D2228;
+    color: white;
+    padding: 5px 40px;
+    border-radius: 5px;
+}
+
+.footer .left {
+    width: 50%;
+}
+
+.footer .left .title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.footer .left .box-email {
+    margin-bottom: 90px;
+}
+
+.footer .left .box-email input {
+    padding: 8px 16px;
+    border-radius: 5px;
+    border: none;
+    margin-right: 10px;
+    width: 300px;
+}
+
+.footer .left .box-email button {
+    padding: 8px 16px;
+    background-color: rgb(230, 64, 119);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.footer .left .box-privacy {
+    display: flex;
+    gap: 30px;
+    font-size: 12px;
+    align-items: center;
+}
+
+.footer .right ul {
+    margin: 0;
+    list-style-type: none;
+    padding: 0;
+}
+
+.footer .right {
+    flex: 1;
+    display: flex;
+    gap: 200px;
+    justify-content: center;
+}
+
+.footer .right .box-shop {
+    margin-bottom: 30px;
+}
+
+.footer .right li {
+    margin-bottom: 10px;
+}

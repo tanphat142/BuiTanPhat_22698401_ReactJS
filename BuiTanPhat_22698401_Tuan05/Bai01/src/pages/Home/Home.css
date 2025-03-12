@@ -1,0 +1,45 @@
+.home {
+    margin: 40px 0px;
+    display: flex;
+    gap: 50px;
+}
+
+.home .left {
+    width: 30%;
+    text-align: center;
+}
+
+.home .right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.home .right .btn-group {
+    display: flex;
+    gap: 20px;
+}
+
+.home .right .btn-group button {
+    padding: 5px 10px;
+    background-color: #dadada;
+    border: none;
+    border-radius: 5px;
+}
+
+.home .right .btn-group button:nth-child(1) {
+    color: #EA9FBB;
+}
+
+.home .right .btn-group button:nth-child(2) {
+    color: #A78ECF;
+}
+
+.home .right .btn-group button:nth-child(3) {
+    color: #DEA3B7;
+}
+
+.home .right .btn-group button:nth-child(4) {
+    color: #397480;
+}
