@@ -1,76 +1,74 @@
 import { useEffect, useState } from "react";
 
 const EditModal = ({ fetchOrderData, id, isOpen, onClose }) => {
-  const [name, setName] = useState("");
-  const [company, setCompany] = useState("");
-  const [orderValue, setOrderValue] = useState(0);
-  const [orderDate, setOrderDate] = useState("");
-  const [status, setStatus] = useState("");
-  const [order, setOrder] = useState(null);
-  const [avatar, setAvatar] = useState(null);
+  const [formData, setFormData] = useState({
+    customerName: "",
+    company: "",
+    orderValue: 0,
+    orderDate: "",
+    status: "",
+    avatar: null,
+  });
 
-  const fetchGetOrder = async () => {
-    await fetch(`http://localhost:3002/orders/${id}`)
-      .then((response) => response.json())
-      .then((data) => setOrder(data));
+  useEffect(() => {
+    if (id && isOpen) {
+      const fetchOrder = async () => {
+        try {
+          const response = await fetch(`http://localhost:3002/orders/${id}`);
+          const data = await response.json();
+          setFormData({
+            customerName: data.customerName || "",
+            company: data.company || "",
+            orderValue: data.orderValue || 0,
+            orderDate: data.orderDate ? data.orderDate.split("T")[0] : "",
+            status: data.status || "",
+            avatar: data.avatar || null,
+          });
+        } catch (error) {
+          console.error("Failed to fetch order:", error);
+        }
+      };
+      fetchOrder();
+    }
+  }, [id, isOpen]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === "orderValue" ? Number(value) : value,
+    }));
   };
-
-  useEffect(() => {
-    if (id) {
-      fetchGetOrder();
-    }
-  }, [id]);
-
-  useEffect(() => {
-    if (order) {
-      setName(order.customerName || "");
-      setCompany(order.company || "");
-      setOrderValue(order.orderValue || 0);
-      setOrderDate(order.orderDate ? order.orderDate.split("T")[0] : "");
-      setStatus(order.status || "");
-      setAvatar(order.avatar || null);
-    }
-  }, [order]);
 
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setAvatar(reader.result);
+        setFormData((prev) => ({ ...prev, avatar: reader.result }));
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleEditUser = async () => {
+  const handleSubmit = async () => {
     const response = await fetch(`http://localhost:3002/orders/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...order,
-        customerName: name,
-        company,
-        orderValue: Number(orderValue),
-        orderDate,
-        status,
-        avatar,
-      }),
+      body: JSON.stringify(formData),
     });
 
     if (response.ok) {
       alert("Cập nhật thành công!");
       fetchOrderData();
+      onClose();
     } else {
-      alert("Không thể cập nhật!");
+      throw new Error("Failed to update order");
     }
-    onClose();
   };
 
   const handleOverlayClick = (e) => {
-    if (e.target.id === "modalOverlay") {
-      onClose();
-    }
+    if (e.target.id === "modalOverlay") onClose();
   };
 
   if (!isOpen) return null;
@@ -82,63 +80,62 @@ const EditModal = ({ fetchOrderData, id, isOpen, onClose }) => {
       className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50"
     >
       <div className="bg-white rounded-2xl p-8 w-full max-w-lg shadow-2xl border border-pink-100">
-        <div className="text-center mb-6">
-          <h2 className="text-3xl font-bold">Update Order</h2>
-        </div>
+        <h2 className="text-3xl font-bold text-center mb-6">
+          Update Order
+        </h2>
 
-        {/* Form Fields */}
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1">
               Customer Name
             </label>
             <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              name="customerName"
+              value={formData.customerName}
+              onChange={handleInputChange}
               type="text"
+              placeholder="Nhập tên khách hàng"
               className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 outline-none"
-              placeholder="Enter customer name"
             />
           </div>
-
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1">
               Company
             </label>
             <input
-              value={company}
-              onChange={(e) => setCompany(e.target.value)}
+              name="company"
+              value={formData.company}
+              onChange={handleInputChange}
               type="text"
+              placeholder="Nhập tên công ty"
               className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 outline-none"
-              placeholder="Enter company"
             />
           </div>
-
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1">
               Order Value
             </label>
             <input
-              value={orderValue}
-              onChange={(e) => setOrderValue(Number(e.target.value))}
+              name="orderValue"
               type="number"
+              value={formData.orderValue}
+              onChange={handleInputChange}
+              placeholder="Nhập giá trị đơn hàng"
               className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 outline-none"
-              placeholder="Enter order value"
             />
           </div>
-
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1">
               Order Date
             </label>
             <input
-              value={orderDate}
-              onChange={(e) => setOrderDate(e.target.value)}
+              name="orderDate"
               type="date"
+              value={formData.orderDate}
+              onChange={handleInputChange}
               className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 outline-none"
             />
           </div>
-
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1">
               Avatar
@@ -149,24 +146,22 @@ const EditModal = ({ fetchOrderData, id, isOpen, onClose }) => {
               onChange={handleAvatarChange}
               className="w-full text-sm border border-gray-300 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold"
             />
-            {avatar && (
-              <div className="mt-3 flex justify-center">
-                <img
-                  src={avatar}
-                  alt="Avatar Preview"
-                  className="w-24 h-24 rounded-full object-cover border-2 border-pink-200 shadow-md"
-                />
-              </div>
+            {formData.avatar && (
+              <img
+                src={formData.avatar}
+                alt="Avatar Preview"
+                className="w-24 h-24 rounded-full object-cover border-2 border-pink-200 shadow-md mt-3 mx-auto"
+              />
             )}
           </div>
-
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1">
               Status
             </label>
             <select
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
+              name="status"
+              value={formData.status}
+              onChange={handleInputChange}
               className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 outline-none"
             >
               <option value="New">New</option>
@@ -176,17 +171,16 @@ const EditModal = ({ fetchOrderData, id, isOpen, onClose }) => {
           </div>
         </div>
 
-        {/* Actions */}
         <div className="flex justify-end gap-4 mt-8">
           <button
             onClick={onClose}
-            className="px-5 py-2 rounded-lg bg-gray-200 text-gray-800 hover:bg-gray-300 transition"
+            className="px-5 py-2 rounded-lg bg-gray-200 text-gray-800 hover:bg-gray-300 transition font-semibold"
           >
             Đóng
           </button>
           <button
-            onClick={handleEditUser}
-            className="px-5 py-2 rounded-lg bg-pink-500 text-white font-semibold hover:bg-pink-600 transition"
+            onClick={handleSubmit}
+            className="px-5 py-2 rounded-lg bg-pink-500 text-white hover:bg-pink-600 transition font-semibold"
           >
             Cập nhật
           </button>

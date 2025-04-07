@@ -1,43 +1,44 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 const AddModal = ({ isOpen, onClose, fetchOrderData }) => {
-  const nameRef = useRef(null);
-  const companyRef = useRef(null);
-  const orderValueRef = useRef(null);
-  const avatarInputRef = useRef(null);
-  const [avatarPreview, setAvatarPreview] = useState(null);
+  const [formData, setFormData] = useState({
+    customerName: "",
+    company: "",
+    orderValue: "",
+    avatar: null,
+  });
 
   if (!isOpen) return null;
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === "orderValue" ? value : value, // Giữ nguyên string cho orderValue, chuyển đổi sau
+    }));
+  };
 
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setAvatarPreview(reader.result);
+        setFormData((prev) => ({ ...prev, avatar: reader.result }));
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleAddUser = async () => {
-    const name = nameRef.current.value;
-    const company = companyRef.current.value;
-    const orderValue = orderValueRef.current.value;
-    const avatar = avatarPreview;
+  const handleSubmit = async () => {
+    const { customerName, company, orderValue, avatar } = formData;
 
-    if (!name || !company || !orderValue) {
-      alert("Please fill out all the fields!");
-      return;
-    }
-
-    if (!avatar) {
-      alert("Please select an avatar image!");
+    if (!customerName || !company || !orderValue || !avatar) {
+      alert("Vui lòng điền đầy đủ thông tin!");
       return;
     }
 
     const newOrder = {
-      customerName: name,
+      customerName,
       company,
       orderValue: Number(orderValue),
       orderDate: new Date().toISOString().split("T")[0],
@@ -52,18 +53,16 @@ const AddModal = ({ isOpen, onClose, fetchOrderData }) => {
     });
 
     if (response.ok) {
-      alert("Order added successfully!");
+      alert("Thêm đơn hàng thành công!");
       fetchOrderData();
       onClose();
     } else {
-      alert("Failed to add order.");
+      throw new Error("Failed to add order");
     }
   };
 
   const handleOverlayClick = (e) => {
-    if (e.target.id === "modalOverlay") {
-      onClose();
-    }
+    if (e.target.id === "modalOverlay") onClose();
   };
 
   return (
@@ -72,10 +71,10 @@ const AddModal = ({ isOpen, onClose, fetchOrderData }) => {
       onClick={handleOverlayClick}
       className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50"
     >
-      <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-lg relative">
-        <div className="text-center mb-6">
-          <h2 className="text-3xl font-semibold text-gray-800">Add New Order</h2>
-        </div>
+      <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-lg">
+        <h2 className="text-3xl font-semibold text-gray-800 text-center mb-6">
+          Add New Order
+        </h2>
 
         <div className="space-y-4">
           <div>
@@ -83,9 +82,11 @@ const AddModal = ({ isOpen, onClose, fetchOrderData }) => {
               Customer Name
             </label>
             <input
-              ref={nameRef}
+              name="customerName"
+              value={formData.customerName}
+              onChange={handleInputChange}
               type="text"
-              placeholder="Enter customer's name"
+              placeholder="Nhập tên khách hàng"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:outline-none"
             />
           </div>
@@ -94,9 +95,11 @@ const AddModal = ({ isOpen, onClose, fetchOrderData }) => {
               Company
             </label>
             <input
-              ref={companyRef}
+              name="company"
+              value={formData.company}
+              onChange={handleInputChange}
               type="text"
-              placeholder="Enter company name"
+              placeholder="Nhập tên công ty"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:outline-none"
             />
           </div>
@@ -105,9 +108,11 @@ const AddModal = ({ isOpen, onClose, fetchOrderData }) => {
               Order Value
             </label>
             <input
-              ref={orderValueRef}
+              name="orderValue"
+              value={formData.orderValue}
+              onChange={handleInputChange}
               type="number"
-              placeholder="Enter order value"
+              placeholder="Nhập giá trị đơn hàng"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:outline-none"
             />
           </div>
@@ -116,16 +121,15 @@ const AddModal = ({ isOpen, onClose, fetchOrderData }) => {
               Avatar
             </label>
             <input
-              ref={avatarInputRef}
               type="file"
               accept="image/*"
               onChange={handleAvatarChange}
               className="w-full text-sm border border-gray-300 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold"
             />
-            {avatarPreview && (
+            {formData.avatar && (
               <div className="mt-4 flex justify-center">
                 <img
-                  src={avatarPreview}
+                  src={formData.avatar}
                   alt="Avatar Preview"
                   className="w-24 h-24 rounded-full object-cover ring-2 ring-pink-400"
                 />
@@ -137,12 +141,12 @@ const AddModal = ({ isOpen, onClose, fetchOrderData }) => {
         <div className="flex justify-end gap-4 mt-8">
           <button
             onClick={onClose}
-            className="px-5 py-2 rounded-lg bg-gray-200 text-gray-800 hover:bg-gray-300 transition"
+            className="px-5 py-2 rounded-lg bg-gray-200 text-gray-800 hover:bg-gray-300 transition font-semibold"
           >
             Đóng
           </button>
           <button
-            onClick={handleAddUser}
+            onClick={handleSubmit}
             className="px-5 py-2 rounded-lg bg-pink-500 text-white font-semibold hover:bg-pink-600 transition"
           >
             Thêm
