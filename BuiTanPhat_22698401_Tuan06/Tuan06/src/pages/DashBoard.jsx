@@ -38,8 +38,8 @@ const DashBoard = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const handleEditClick = (id) => {
-    setSelectedOrderId(id); // Cập nhật ID khi click vào chỉnh sửa
-    setEditModal(true); // Mở modal chỉnh sửa
+    setSelectedOrderId(id);
+    setEditModal(true);
   };
 
   return (
@@ -66,7 +66,7 @@ const DashBoard = () => {
       <div className="mt-7">
         <table className="min-w-full border border-gray-300 rounded-sm border-separate">
           <thead>
-            <tr className="text-gray-500">
+            <tr className="text-gray-500 bg">
               <td className="p-3">
                 <input type="checkbox" />
               </td>
@@ -84,7 +84,14 @@ const DashBoard = () => {
                 <td className="p-3">
                   <input type="checkbox" />
                 </td>
-                <td className="px-4 py-3 font-medium">{item.customerName}</td>
+                <td className="px-4 py-3 font-medium flex items-center gap-3">
+                  <img
+                    src={item.avatar || "https://via.placeholder.com/40"}
+                    alt={item.customerName}
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                  <span>{item.customerName}</span>
+                </td>
                 <td className="px-4 py-3">{item.company}</td>
                 <td className="px-4 py-3">${item.orderValue}</td>
                 <td className="px-4 py-3 text-gray-400">{item.orderDate}</td>
@@ -109,30 +116,54 @@ const DashBoard = () => {
           </tbody>
         </table>
       </div>
-      <div className="mt-5 flex justify-between">
+      <div className="mt-5 flex justify-between items-center">
         <p className="text-sm">{orders.length} results</p>
-        <div className="flex">
+        <div className="flex items-center gap-2">
           <button
             onClick={() => paginate(currentPage - 1)}
             disabled={currentPage === 1}
-            className="px-4 py-2 text-gray-700 rounded-md cursor-pointer"
+            className={`p-2 rounded-full ${
+              currentPage === 1
+                ? "text-gray-400 cursor-not-allowed"
+                : "text-gray-700 hover:bg-gray-200"
+            }`}
           >
-            <ChevronLeft />
+            <ChevronLeft size={20} />
           </button>
-          <div className="flex items-center mx-2">
-            <p className="text-gray-700">
-              Page {currentPage} of {totalPages}
-            </p>
-          </div>
+
+          {[...Array(totalPages)].map((_, index) => {
+            const page = index + 1;
+            return (
+              <button
+                key={page}
+                onClick={() => paginate(page)}
+                className={`w-8 h-8 rounded-full text-sm font-medium 
+            ${
+              page === currentPage
+                ? "bg-pink-500 text-white"
+                : "text-gray-700 hover:bg-gray-200"
+            }
+          `}
+              >
+                {page}
+              </button>
+            );
+          })}
+
           <button
             onClick={() => paginate(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="px-4 py-2 text-gray-700 rounded-md cursor-pointer"
+            className={`p-2 rounded-full ${
+              currentPage === totalPages
+                ? "text-gray-400 cursor-not-allowed"
+                : "text-gray-700 hover:bg-gray-200"
+            }`}
           >
-            <ChevronRight />
+            <ChevronRight size={20} />
           </button>
         </div>
       </div>
+
       <AddModal
         fetchOrderData={fetchOrderData}
         isOpen={isModalOpen}
