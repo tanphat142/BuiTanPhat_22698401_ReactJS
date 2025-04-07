@@ -13,6 +13,7 @@ const Header = () => {
 
     fetchData();
   }, []);
+  
   return (
     <>
       <div className="flex justify-between p-5 border-b border-gray-300">
