@@ -1,0 +1,25 @@
+{
+  "overview": [
+    {
+      "title": "Turnover",
+      "price": "92,405",
+      "discount": "5.39",
+      "bg": "#FFF0F5",
+      "icon": "Button_1509"
+    },
+    {
+      "title": "Profit",
+      "price": "32,218",
+      "discount": "5.39",
+      "bg": "#EFF6FF",
+      "icon": "Button_1529"
+    },
+    {
+      "title": "New customer",
+      "price": "298",
+      "discount": "6.84",
+      "bg": "#F0F7FD",
+      "icon": "Button_1530"
+    }
+  ]
+}
