@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const EditModal = ({ id, isOpen, onClose }) => {
+const EditModal = ({ fetchOrderData, id, isOpen, onClose }) => {
   const [formData, setFormData] = useState({
     customerName: "",
     company: "",
@@ -48,6 +48,22 @@ const EditModal = ({ id, isOpen, onClose }) => {
         setFormData((prev) => ({ ...prev, avatar: reader.result }));
       };
       reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSubmit = async () => {
+    const response = await fetch(`http://localhost:3002/orders/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.ok) {
+      alert("Cập nhật thành công!");
+      fetchOrderData();
+      onClose();
+    } else {
+      throw new Error("Failed to update order");
     }
   };
 
@@ -163,6 +179,7 @@ const EditModal = ({ id, isOpen, onClose }) => {
             Đóng
           </button>
           <button
+            onClick={handleSubmit}
             className="px-5 py-2 rounded-lg bg-pink-500 text-white hover:bg-pink-600 transition font-semibold"
           >
             Cập nhật

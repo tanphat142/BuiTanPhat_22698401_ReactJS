@@ -26,11 +26,11 @@
     {
       "customerName": "Phat",
       "company": "Hihi",
-      "orderValue": 500,
-      "status": "In-progress",
-      "id": 1,
+      "orderValue": 700,
       "orderDate": "2025-04-09",
-      "avatar": "https://randomuser.me/api/portraits/men/1.jpg"
+      "status": "In-progress",
+      "avatar": "https://randomuser.me/api/portraits/men/1.jpg",
+      "id": 1
     },
     {
       "id": 2,
