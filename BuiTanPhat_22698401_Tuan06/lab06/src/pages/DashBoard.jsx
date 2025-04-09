@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { images } from "../assets/assets";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
+import EditModal from "../components/EditModal";
 
 const DashBoard = () => {
   const [orders, setOrders] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemPerPage = 6;
 
+  const [editModal, setEditModal] = useState(false);
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
 
   const fetchOrderData = async () => {
     fetch("http://localhost:3002/orders")
@@ -33,7 +35,10 @@ const DashBoard = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  
+  const handleEditClick = (id) => {
+    setSelectedOrderId(id);
+    setEditModal(true);
+  };
 
   return (
     <div className="p-5">
@@ -98,6 +103,7 @@ const DashBoard = () => {
                 </td>
                 <td className="px-4 py-3 cursor-pointer">
                   <img
+                    onClick={() => handleEditClick(item.id)}
                     src={images.create}
                     alt="create"
                   />
@@ -155,7 +161,14 @@ const DashBoard = () => {
         </div>
       </div>
 
-  
+      {editModal && selectedOrderId !== null && (
+        <EditModal
+          fetchOrderData={fetchOrderData}
+          id={selectedOrderId}
+          isOpen={editModal}
+          onClose={() => setEditModal(false)}
+        />
+      )}
     </div>
   );
 };
