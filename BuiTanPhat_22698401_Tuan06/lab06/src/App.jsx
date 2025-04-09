@@ -1,7 +1,7 @@
 import Header from "./components/Header";
 
 import SideBar from "./components/Sidebar";
-
+import DashBoard from "./pages/Dashboard";
 
 const App = () => {
   return (
@@ -11,6 +11,7 @@ const App = () => {
       </div>
       <div>
         <Header />
+        <DashBoard />
       </div>
     </div>
   )
